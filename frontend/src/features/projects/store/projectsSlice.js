@@ -1,17 +1,20 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { projectsApi } from "../api/projectsApi";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { projectsApi } from '../api/projectsApi';
 
-export const fetchProjectsThunk = createAsyncThunk("projects/fetch", async (_, thunkAPI) => {
-  try {
-    const token = thunkAPI.getState().auth.token;
-    return await projectsApi.list(token);
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+export const fetchProjectsThunk = createAsyncThunk(
+  'projects/fetch',
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.token;
+      return await projectsApi.list(token);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
   }
-});
+);
 
 export const createProjectThunk = createAsyncThunk(
-  "projects/create",
+  'projects/create',
   async (payload, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.token;
@@ -24,7 +27,7 @@ export const createProjectThunk = createAsyncThunk(
 );
 
 export const addProjectMemberThunk = createAsyncThunk(
-  "projects/addMember",
+  'projects/addMember',
   async ({ projectId, userId }, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.token;
@@ -37,7 +40,7 @@ export const addProjectMemberThunk = createAsyncThunk(
 );
 
 export const removeProjectMemberThunk = createAsyncThunk(
-  "projects/removeMember",
+  'projects/removeMember',
   async ({ projectId, userId }, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.token;
@@ -50,14 +53,14 @@ export const removeProjectMemberThunk = createAsyncThunk(
 );
 
 const projectsSlice = createSlice({
-  name: "projects",
-  initialState: { items: [], loading: false, error: "" },
+  name: 'projects',
+  initialState: { items: [], loading: false, error: '' },
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchProjectsThunk.pending, (state) => {
         state.loading = true;
-        state.error = "";
+        state.error = '';
       })
       .addCase(fetchProjectsThunk.fulfilled, (state, action) => {
         state.loading = false;
@@ -76,7 +79,7 @@ const projectsSlice = createSlice({
       .addCase(removeProjectMemberThunk.rejected, (state, action) => {
         state.error = action.payload;
       });
-  },
+  }
 });
 
 export default projectsSlice.reducer;

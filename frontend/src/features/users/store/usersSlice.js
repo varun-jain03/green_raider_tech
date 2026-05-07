@@ -1,24 +1,27 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { usersApi } from "../api/usersApi";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { usersApi } from '../api/usersApi';
 
-export const fetchUsersThunk = createAsyncThunk("users/fetch", async (_, thunkAPI) => {
-  try {
-    const token = thunkAPI.getState().auth.token;
-    return await usersApi.list(token);
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+export const fetchUsersThunk = createAsyncThunk(
+  'users/fetch',
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.token;
+      return await usersApi.list(token);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
   }
-});
+);
 
 const usersSlice = createSlice({
-  name: "users",
-  initialState: { items: [], loading: false, error: "" },
+  name: 'users',
+  initialState: { items: [], loading: false, error: '' },
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchUsersThunk.pending, (state) => {
         state.loading = true;
-        state.error = "";
+        state.error = '';
       })
       .addCase(fetchUsersThunk.fulfilled, (state, action) => {
         state.loading = false;
@@ -28,7 +31,7 @@ const usersSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       });
-  },
+  }
 });
 
 export default usersSlice.reducer;

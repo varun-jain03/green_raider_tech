@@ -1,32 +1,38 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { authApi } from "../api/authApi";
-import { storage } from "../../../shared/lib/storage";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { authApi } from '../api/authApi';
+import { storage } from '../../../shared/lib/storage';
 
 const initialState = {
   user: storage.getUser(),
   token: storage.getToken(),
   loading: false,
-  error: "",
+  error: ''
 };
 
-export const registerThunk = createAsyncThunk("auth/register", async (payload, thunkAPI) => {
-  try {
-    return await authApi.register(payload);
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+export const registerThunk = createAsyncThunk(
+  'auth/register',
+  async (payload, thunkAPI) => {
+    try {
+      return await authApi.register(payload);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
   }
-});
+);
 
-export const loginThunk = createAsyncThunk("auth/login", async (payload, thunkAPI) => {
-  try {
-    return await authApi.login(payload);
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+export const loginThunk = createAsyncThunk(
+  'auth/login',
+  async (payload, thunkAPI) => {
+    try {
+      return await authApi.login(payload);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
   }
-});
+);
 
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
     logout(state) {
@@ -36,14 +42,14 @@ const authSlice = createSlice({
       storage.clearUser();
     },
     clearAuthError(state) {
-      state.error = "";
-    },
+      state.error = '';
+    }
   },
   extraReducers: (builder) => {
     builder
       .addCase(registerThunk.pending, (state) => {
         state.loading = true;
-        state.error = "";
+        state.error = '';
       })
       .addCase(registerThunk.fulfilled, (state) => {
         state.loading = false;
@@ -54,7 +60,7 @@ const authSlice = createSlice({
       })
       .addCase(loginThunk.pending, (state) => {
         state.loading = true;
-        state.error = "";
+        state.error = '';
       })
       .addCase(loginThunk.fulfilled, (state, action) => {
         state.loading = false;
@@ -67,7 +73,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       });
-  },
+  }
 });
 
 export const { logout, clearAuthError } = authSlice.actions;

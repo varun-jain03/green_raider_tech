@@ -1,8 +1,8 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { dashboardApi } from "../api/dashboardApi";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { dashboardApi } from '../api/dashboardApi';
 
 export const fetchDashboardThunk = createAsyncThunk(
-  "dashboard/fetchStats",
+  'dashboard/fetchStats',
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.token;
@@ -14,14 +14,14 @@ export const fetchDashboardThunk = createAsyncThunk(
 );
 
 const dashboardSlice = createSlice({
-  name: "dashboard",
-  initialState: { stats: null, loading: false, error: "" },
+  name: 'dashboard',
+  initialState: { stats: null, loading: false, error: '' },
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchDashboardThunk.pending, (state) => {
         state.loading = true;
-        state.error = "";
+        state.error = '';
       })
       .addCase(fetchDashboardThunk.fulfilled, (state, action) => {
         state.loading = false;
@@ -31,7 +31,7 @@ const dashboardSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       });
-  },
+  }
 });
 
 export default dashboardSlice.reducer;

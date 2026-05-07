@@ -1,27 +1,33 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { tasksApi } from "../api/tasksApi";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { tasksApi } from '../api/tasksApi';
 
-export const fetchTasksThunk = createAsyncThunk("tasks/fetch", async (_, thunkAPI) => {
-  try {
-    const token = thunkAPI.getState().auth.token;
-    return await tasksApi.list(token);
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+export const fetchTasksThunk = createAsyncThunk(
+  'tasks/fetch',
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.token;
+      return await tasksApi.list(token);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
   }
-});
+);
 
-export const createTaskThunk = createAsyncThunk("tasks/create", async (payload, thunkAPI) => {
-  try {
-    const token = thunkAPI.getState().auth.token;
-    await tasksApi.create(token, payload);
-    thunkAPI.dispatch(fetchTasksThunk());
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+export const createTaskThunk = createAsyncThunk(
+  'tasks/create',
+  async (payload, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.token;
+      await tasksApi.create(token, payload);
+      thunkAPI.dispatch(fetchTasksThunk());
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
   }
-});
+);
 
 export const updateTaskStatusThunk = createAsyncThunk(
-  "tasks/updateStatus",
+  'tasks/updateStatus',
   async ({ id, status }, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.token;
@@ -34,14 +40,14 @@ export const updateTaskStatusThunk = createAsyncThunk(
 );
 
 const tasksSlice = createSlice({
-  name: "tasks",
-  initialState: { items: [], loading: false, error: "" },
+  name: 'tasks',
+  initialState: { items: [], loading: false, error: '' },
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchTasksThunk.pending, (state) => {
         state.loading = true;
-        state.error = "";
+        state.error = '';
       })
       .addCase(fetchTasksThunk.fulfilled, (state, action) => {
         state.loading = false;
@@ -57,7 +63,7 @@ const tasksSlice = createSlice({
       .addCase(updateTaskStatusThunk.rejected, (state, action) => {
         state.error = action.payload;
       });
-  },
+  }
 });
 
 export default tasksSlice.reducer;

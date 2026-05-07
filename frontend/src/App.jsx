@@ -1,13 +1,13 @@
 // Dependencies
-import { Navigate, Route, Routes } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 // File imports
-import AuthPage from "./features/auth/components/AuthPage";
-import DashboardPage from "./features/dashboard/components/DashboardPage";
-import ProjectsPage from "./features/projects/components/ProjectsPage";
-import TasksPage from "./features/tasks/components/TasksPage";
-import AppShell from "./widgets/layout/AppShell";
+import AuthPage from './features/auth/components/AuthPage';
+import DashboardPage from './features/dashboard/components/DashboardPage';
+import ProjectsPage from './features/projects/components/ProjectsPage';
+import TasksPage from './features/tasks/components/TasksPage';
+import AppShell from './widgets/layout/AppShell';
 
 function PrivateRoute({ children }) {
   const token = useSelector((state) => state.auth.token);

@@ -46,10 +46,10 @@ npm run dev
 
 ## Environment Variables
 
-| Key                 | Description                                           |
-| ------------------- | ----------------------------------------------------- |
-| `VITE_API_BASE_URL` | Backend API base URL including `/api` path            |
-  
+| Key                 | Description                                |
+| ------------------- | ------------------------------------------ |
+| `VITE_API_BASE_URL` | Backend API base URL including `/api` path |
+
 ```env
 VITE_API_BASE_URL=https://teamtaskmanager-backend-cwun.onrender.com/api
 ```
