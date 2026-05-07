@@ -82,12 +82,14 @@ const listTasks = async (query, currentUser) => {
   // Members only see tasks in projects they belong to OR tasks assigned to them
   if (currentUser.role !== "admin") {
     const { findProjects } = require('../projects/project.repository.js');
-    const myProjects = await findProjects({ members: currentUser._id });
-    const projectIds = myProjects.map((p) => p._id);
-    filter.$or = [
-      { project: { $in: projectIds } },
-      { assignee: currentUser._id }
-    ];
+  
+    const myProjects = await findProjects({
+      members: currentUser._id
+    });
+  
+    const projectIds = myProjects.map((project) => project._id);
+  
+    filter.project = { $in: projectIds };
   }
 
   return await findTasks(filter);
