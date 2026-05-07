@@ -23,6 +23,32 @@ export const createProjectThunk = createAsyncThunk(
   }
 );
 
+export const addProjectMemberThunk = createAsyncThunk(
+  "projects/addMember",
+  async ({ projectId, userId }, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.token;
+      await projectsApi.addMember(token, projectId, userId);
+      thunkAPI.dispatch(fetchProjectsThunk());
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const removeProjectMemberThunk = createAsyncThunk(
+  "projects/removeMember",
+  async ({ projectId, userId }, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.token;
+      await projectsApi.removeMember(token, projectId, userId);
+      thunkAPI.dispatch(fetchProjectsThunk());
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 const projectsSlice = createSlice({
   name: "projects",
   initialState: { items: [], loading: false, error: "" },
@@ -42,6 +68,12 @@ const projectsSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(createProjectThunk.rejected, (state, action) => {
+        state.error = action.payload;
+      })
+      .addCase(addProjectMemberThunk.rejected, (state, action) => {
+        state.error = action.payload;
+      })
+      .addCase(removeProjectMemberThunk.rejected, (state, action) => {
         state.error = action.payload;
       });
   },
