@@ -22,6 +22,12 @@ A responsive single-page frontend for the Team Task Manager assignment, built wi
 - **Tasks**: list/filter tasks, create task (admin), status updates
 - **Responsive Design**: mobile-first layout for auth, navigation, forms, and data sections
 
+## Live Deployment
+
+- Platform: **Netlify**
+- Live App URL: [https://incredible-toffee-87dd5f.netlify.app/](https://incredible-toffee-87dd5f.netlify.app/)
+- Connected Backend (Render): [https://teamtaskmanager-backend-cwun.onrender.com](https://teamtaskmanager-backend-cwun.onrender.com)
+
 ## Setup
 
 ```bash

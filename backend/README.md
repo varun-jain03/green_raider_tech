@@ -21,6 +21,11 @@ A simple yet production-leaning REST API for a team task manager built with **Ex
 - **Tasks**: create, list (filterable), fetch, update, delete with project scoping
 - **Dashboard**: aggregate stats — totals by status, overdue count, my tasks
 
+## Live Deployment
+
+- Platform: **Render**
+- Live API URL: [https://teamtaskmanager-backend-cwun.onrender.com](https://teamtaskmanager-backend-cwun.onrender.com)
+
 ## Project Structure
 
 ```

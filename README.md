@@ -38,6 +38,11 @@ This repository contains:
 - Dashboard metrics (totals, statuses, overdue, personal tasks)
 - Responsive web UI
 
+## Live Deployment
+
+- Frontend (Netlify): [https://incredible-toffee-87dd5f.netlify.app/](https://incredible-toffee-87dd5f.netlify.app/)
+- Backend (Render): [https://teamtaskmanager-backend-cwun.onrender.com](https://teamtaskmanager-backend-cwun.onrender.com)
+
 ## Repository Structure
 
 ```text
@@ -119,7 +124,11 @@ npm run dev
 
 - Backend: `http://localhost:5000`
 - Frontend: `http://localhost:5173` (default Vite port)
-  
+
+## Deployment
+
+Frontend is deployed on **Netlify** and backend is deployed on **Render**.
+
 ### Backend service
 
 - Build/install: `npm install`
@@ -136,4 +145,3 @@ npm run dev
 
 - Backend details: `backend/README.md`
 - Frontend details: `frontend/README.md`
-  
