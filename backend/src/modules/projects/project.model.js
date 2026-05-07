@@ -6,7 +6,7 @@ const projectSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "Project name is required"],
+      required: [true, 'Project name is required'],
       trim: true,
       minlength: 2,
       maxlength: 120
@@ -15,23 +15,23 @@ const projectSchema = new mongoose.Schema(
       type: String,
       trim: true,
       maxlength: 2000,
-      default: ""
+      default: ''
     },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true
     },
     members: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        ref: 'User'
       }
     ]
   },
   { timestamps: true }
 );
 
-const Project = mongoose.model("Project", projectSchema);
+const Project = mongoose.model('Project', projectSchema);
 
 module.exports = Project;

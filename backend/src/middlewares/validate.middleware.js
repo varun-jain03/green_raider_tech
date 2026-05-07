@@ -14,8 +14,10 @@ const validate = (validations) => {
     if (errors.isEmpty()) {
       return next();
     }
-    const formatted = errors.array().map((e) => ({ field: e.path, message: e.msg }));
-    return next(new ApiError(400, "Validation failed", formatted));
+    const formatted = errors
+      .array()
+      .map((e) => ({ field: e.path, message: e.msg }));
+    return next(new ApiError(400, 'Validation failed', formatted));
   };
 };
 

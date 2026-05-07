@@ -13,7 +13,7 @@ const findUserById = async (id) => {
 
 // List All Users (Excluding Password)
 const listUsers = async (filter = {}) => {
-  return await User.find(filter).select("-password").sort({ createdAt: -1 });
+  return await User.find(filter).select('-password').sort({ createdAt: -1 });
 };
 
 // Create A New User Document (Unsaved)

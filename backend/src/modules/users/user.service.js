@@ -1,5 +1,9 @@
 // File Imports
-const { listUsers, findUserById, deleteUserById } = require('./user.repository.js');
+const {
+  listUsers,
+  findUserById,
+  deleteUserById
+} = require('./user.repository.js');
 const ApiError = require('../../utils/ApiError.js');
 
 // Prevent Password Leaks
@@ -19,7 +23,7 @@ const getAllUsers = async () => {
 const getUserById = async (id) => {
   const user = await findUserById(id);
   if (!user) {
-    throw new ApiError(404, "User not found");
+    throw new ApiError(404, 'User not found');
   }
   return sanitizeUser(user);
 };
@@ -27,11 +31,11 @@ const getUserById = async (id) => {
 // Delete User (Admin Only)
 const removeUser = async (id, currentUserId) => {
   if (String(id) === String(currentUserId)) {
-    throw new ApiError(400, "You cannot delete your own account");
+    throw new ApiError(400, 'You cannot delete your own account');
   }
   const user = await deleteUserById(id);
   if (!user) {
-    throw new ApiError(404, "User not found");
+    throw new ApiError(404, 'User not found');
   }
   return sanitizeUser(user);
 };

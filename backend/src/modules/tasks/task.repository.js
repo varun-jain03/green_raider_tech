@@ -4,9 +4,9 @@ const Task = require('./task.model.js');
 // Populate Setup Shared Across Queries
 const populateFields = (query) => {
   return query
-    .populate("assignee", "name email role")
-    .populate("createdBy", "name email role")
-    .populate("project", "name");
+    .populate('assignee', 'name email role')
+    .populate('createdBy', 'name email role')
+    .populate('project', 'name');
 };
 
 // Create Task
@@ -29,7 +29,10 @@ const findTasks = async (filter = {}) => {
 
 // Update Task
 const updateTaskById = async (id, updates) => {
-  const query = Task.findByIdAndUpdate(id, updates, { new: true, runValidators: true });
+  const query = Task.findByIdAndUpdate(id, updates, {
+    new: true,
+    runValidators: true
+  });
   return await populateFields(query);
 };
 

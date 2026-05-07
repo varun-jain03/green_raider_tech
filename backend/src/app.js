@@ -22,7 +22,9 @@ app.use(morgan('dev'));
 
 // Health Check
 app.get('/', (req, res) => {
-  res.status(200).json({ success: true, message: 'Team Task Manager API is running' });
+  res
+    .status(200)
+    .json({ success: true, message: 'Team Task Manager API is running' });
 });
 
 // API Routes

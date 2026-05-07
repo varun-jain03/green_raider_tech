@@ -4,7 +4,7 @@ const { findProjects } = require('../projects/project.repository.js');
 
 // Build Base Filter Depending On Role
 const buildScope = async (user) => {
-  if (user.role === "admin") return {};
+  if (user.role === 'admin') return {};
   const myProjects = await findProjects({ members: user._id });
   const projectIds = myProjects.map((p) => p._id);
   return {
@@ -19,10 +19,10 @@ const getStats = async (user) => {
 
   const [total, todo, inProgress, done, overdue] = await Promise.all([
     countTasks(scope),
-    countTasks({ ...scope, status: "todo" }),
-    countTasks({ ...scope, status: "in-progress" }),
-    countTasks({ ...scope, status: "done" }),
-    countTasks({ ...scope, status: { $ne: "done" }, dueDate: { $lt: now } })
+    countTasks({ ...scope, status: 'todo' }),
+    countTasks({ ...scope, status: 'in-progress' }),
+    countTasks({ ...scope, status: 'done' }),
+    countTasks({ ...scope, status: { $ne: 'done' }, dueDate: { $lt: now } })
   ]);
 
   const myTasks = await findTasks({ ...scope, assignee: user._id });

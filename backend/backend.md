@@ -14,12 +14,15 @@ A production-leaning REST API for managing team projects and tasks, built with *
 ## Features
 
 ### Authentication
+
 - User registration and login
 - Password hashing using bcryptjs
 - JWT-based authentication
 
 ### Role-Based Access Control (RBAC)
+
 #### Admin
+
 - Full CRUD access for:
   - Users
   - Projects
@@ -27,16 +30,19 @@ A production-leaning REST API for managing team projects and tasks, built with *
 - Add or remove project members
 
 #### Member
+
 - View only assigned projects
 - View tasks assigned to them
 - Update only the status of their own tasks
 
 ### Projects
+
 - Create, update, delete projects
 - Assign and remove project members
 - Fetch all or single projects
 
 ### Tasks
+
 - Create, update, delete tasks
 - Filter tasks by:
   - Status
@@ -46,6 +52,7 @@ A production-leaning REST API for managing team projects and tasks, built with *
   - Overdue tasks
 
 ### Dashboard
+
 - Total tasks by status
 - Overdue tasks count
 - Logged-in user's assigned tasks
@@ -165,14 +172,14 @@ npm run dev
 
 # Environment Variables
 
-| Variable | Description |
-|---|---|
-| PORT | Server port |
-| MONGO_URI | MongoDB connection string |
-| ACCESS_TOKEN_SECRET | JWT secret key |
-| ACCESS_TOKEN_EXPIRY | JWT token expiry |
-| SALT_ROUNDS | bcrypt salt rounds |
-| NODE_ENV | Environment mode |
+| Variable            | Description               |
+| ------------------- | ------------------------- |
+| PORT                | Server port               |
+| MONGO_URI           | MongoDB connection string |
+| ACCESS_TOKEN_SECRET | JWT secret key            |
+| ACCESS_TOKEN_EXPIRY | JWT token expiry          |
+| SALT_ROUNDS         | bcrypt salt rounds        |
+| NODE_ENV            | Environment mode          |
 
 ---
 
@@ -195,10 +202,10 @@ All API responses follow this structure:
 
 ## Authentication
 
-| Method | Endpoint | Access |
-|---|---|---|
-| POST | `/api/auth/register` | Public |
-| POST | `/api/auth/login` | Public |
+| Method | Endpoint             | Access |
+| ------ | -------------------- | ------ |
+| POST   | `/api/auth/register` | Public |
+| POST   | `/api/auth/login`    | Public |
 
 ### Register Request Body
 
@@ -224,26 +231,26 @@ All API responses follow this structure:
 
 ## Users
 
-| Method | Endpoint | Access | Description |
-|---|---|---|---|
-| GET | `/api/users/me` | Authenticated | Get current user profile |
-| GET | `/api/users` | Admin | Get all users |
-| GET | `/api/users/:id` | Admin | Get user by ID |
-| DELETE | `/api/users/:id` | Admin | Delete user |
+| Method | Endpoint         | Access        | Description              |
+| ------ | ---------------- | ------------- | ------------------------ |
+| GET    | `/api/users/me`  | Authenticated | Get current user profile |
+| GET    | `/api/users`     | Admin         | Get all users            |
+| GET    | `/api/users/:id` | Admin         | Get user by ID           |
+| DELETE | `/api/users/:id` | Admin         | Delete user              |
 
 ---
 
 ## Projects
 
-| Method | Endpoint | Access |
-|---|---|---|
-| GET | `/api/projects` | Authenticated |
-| GET | `/api/projects/:id` | Authenticated |
-| POST | `/api/projects` | Admin |
-| PATCH | `/api/projects/:id` | Admin |
-| DELETE | `/api/projects/:id` | Admin |
-| POST | `/api/projects/:id/members` | Admin |
-| DELETE | `/api/projects/:id/members/:userId` | Admin |
+| Method | Endpoint                            | Access        |
+| ------ | ----------------------------------- | ------------- |
+| GET    | `/api/projects`                     | Authenticated |
+| GET    | `/api/projects/:id`                 | Authenticated |
+| POST   | `/api/projects`                     | Admin         |
+| PATCH  | `/api/projects/:id`                 | Admin         |
+| DELETE | `/api/projects/:id`                 | Admin         |
+| POST   | `/api/projects/:id/members`         | Admin         |
+| DELETE | `/api/projects/:id/members/:userId` | Admin         |
 
 ### Create Project Body
 
@@ -259,13 +266,13 @@ All API responses follow this structure:
 
 ## Tasks
 
-| Method | Endpoint | Access |
-|---|---|---|
-| GET | `/api/tasks` | Authenticated |
-| GET | `/api/tasks/:id` | Authenticated |
-| POST | `/api/tasks` | Admin |
-| PATCH | `/api/tasks/:id` | Authenticated |
-| DELETE | `/api/tasks/:id` | Admin |
+| Method | Endpoint         | Access        |
+| ------ | ---------------- | ------------- |
+| GET    | `/api/tasks`     | Authenticated |
+| GET    | `/api/tasks/:id` | Authenticated |
+| POST   | `/api/tasks`     | Admin         |
+| PATCH  | `/api/tasks/:id` | Authenticated |
+| DELETE | `/api/tasks/:id` | Admin         |
 
 ### Create Task Body
 
@@ -288,6 +295,7 @@ GET /api/tasks?status=todo&priority=high
 ```
 
 Available filters:
+
 - status
 - priority
 - project
@@ -298,11 +306,12 @@ Available filters:
 
 ## Dashboard
 
-| Method | Endpoint | Access |
-|---|---|---|
-| GET | `/api/dashboard/stats` | Authenticated |
+| Method | Endpoint               | Access        |
+| ------ | ---------------------- | ------------- |
+| GET    | `/api/dashboard/stats` | Authenticated |
 
 Returns:
+
 - Task counts by status
 - Overdue tasks
 - Logged-in user's tasks

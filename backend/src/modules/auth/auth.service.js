@@ -1,6 +1,6 @@
 // Dependencies
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 // File Imports
 const { findUserByEmail, createUser } = require('./auth.repository.js');
@@ -19,7 +19,7 @@ const generateAccessToken = (user) => {
   return jwt.sign(
     { userId: user._id, role: user.role },
     process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: process.env.ACCESS_TOKEN_EXPIRY || "1h" }
+    { expiresIn: process.env.ACCESS_TOKEN_EXPIRY || '1h' }
   );
 };
 
@@ -27,7 +27,7 @@ const generateAccessToken = (user) => {
 const registerUser = async (data) => {
   const existingUser = await findUserByEmail(data.email);
   if (existingUser) {
-    throw new ApiError(409, "User already exists with this email");
+    throw new ApiError(409, 'User already exists with this email');
   }
 
   const saltRounds = Number(process.env.SALT_ROUNDS) || 10;
@@ -37,7 +37,7 @@ const registerUser = async (data) => {
     name: data.name,
     email: data.email,
     password: hashedPassword,
-    role: data.role || "member"
+    role: data.role || 'member'
   });
 
   return sanitizeUser(registeredUser);
@@ -47,12 +47,12 @@ const registerUser = async (data) => {
 const loginUser = async (data) => {
   const existingUser = await findUserByEmail(data.email);
   if (!existingUser) {
-    throw new ApiError(401, "Invalid credentials");
+    throw new ApiError(401, 'Invalid credentials');
   }
 
   const isMatch = await bcrypt.compare(data.password, existingUser.password);
   if (!isMatch) {
-    throw new ApiError(401, "Invalid credentials");
+    throw new ApiError(401, 'Invalid credentials');
   }
 
   const accessToken = generateAccessToken(existingUser);
