@@ -33,16 +33,9 @@ export default function TasksPage() {
     return items.filter((task) => task.status === statusFilter);
   }, [items, statusFilter]);
 
-  // Build assignee options from the selected project's members.
-  // Handles both populated objects ({_id, name, email}) and raw ID strings.
   const selectedProjectMembers = useMemo(() => {
     const selected = projects.find((p) => p._id === form.project);
-    if (!selected || !Array.isArray(selected.members)) return [];
-    return selected.members.map((m) =>
-      typeof m === 'string'
-        ? { _id: m, name: m, email: '' }
-        : { _id: m._id, name: m.name || m._id, email: m.email || '' }
-    );
+    return selected?.members ?? [];
   }, [projects, form.project]);
 
   const handleCreate = (event) => {
@@ -83,7 +76,6 @@ export default function TasksPage() {
             }
             required
           />
-
           <select
             className="rounded-md border border-slate-300 px-3 py-2"
             value={form.project}
@@ -103,7 +95,6 @@ export default function TasksPage() {
               </option>
             ))}
           </select>
-
           <select
             className="rounded-md border border-slate-300 px-3 py-2"
             value={form.priority}
@@ -115,7 +106,6 @@ export default function TasksPage() {
             <option value="medium">Medium</option>
             <option value="high">High</option>
           </select>
-
           <input
             className="rounded-md border border-slate-300 px-3 py-2"
             type="date"
@@ -124,7 +114,6 @@ export default function TasksPage() {
               setForm((prev) => ({ ...prev, dueDate: e.target.value }))
             }
           />
-
           <select
             className="rounded-md border border-slate-300 px-3 py-2 md:col-span-2 disabled:bg-slate-100 disabled:text-slate-400"
             value={form.assignee}
@@ -134,15 +123,11 @@ export default function TasksPage() {
             disabled={!form.project}
           >
             <option value="">
-              {!form.project
-                ? 'Select a project first'
-                : selectedProjectMembers.length === 0
-                ? 'No members in this project'
-                : 'Unassigned'}
+              {form.project ? 'Unassigned' : 'Select a project first'}
             </option>
             {selectedProjectMembers.map((member) => (
               <option key={member._id} value={member._id}>
-                {member.email ? `${member.name} (${member.email})` : member.name}
+                {member.name} ({member.email})
               </option>
             ))}
           </select>
@@ -155,7 +140,6 @@ export default function TasksPage() {
 
       {loading && <p className="mt-4 text-slate-600">Loading tasks...</p>}
       {error && <p className="mt-4 text-rose-600">{error}</p>}
-
       <div className="mt-4 space-y-3">
         {filteredTasks.map((task) => (
           <article
@@ -185,9 +169,6 @@ export default function TasksPage() {
               Project: {task.project?.name}
             </p>
             <p className="text-sm text-slate-600">Priority: {task.priority}</p>
-            <p className="text-sm text-slate-600">
-              Assignee: {task.assignee?.name ?? 'Unassigned'}
-            </p>
           </article>
         ))}
       </div>
