@@ -33,6 +33,17 @@ export default function TasksPage() {
     return items.filter((task) => task.status === statusFilter);
   }, [items, statusFilter]);
 
+  const getMemberId = (member) => {
+    if (!member) return '';
+    return typeof member === 'string' ? member : member._id;
+  };
+
+  const getMemberLabel = (member) => {
+    if (!member) return 'Unknown';
+    if (typeof member === 'string') return member;
+    return member.name || member.email || member._id;
+  };
+
   const selectedProjectMembers = useMemo(() => {
     const selected = projects.find((p) => p._id === form.project);
     return selected?.members ?? [];
@@ -40,8 +51,11 @@ export default function TasksPage() {
 
   const handleCreate = (event) => {
     event.preventDefault();
-    const payload = { ...form, dueDate: form.dueDate || null };
-    if (!payload.assignee) delete payload.assignee;
+    const payload = {
+      ...form,
+      dueDate: form.dueDate || null,
+      assignee: form.assignee || null
+    };
     dispatch(createTaskThunk(payload));
     setForm(initialForm);
   };
@@ -114,23 +128,34 @@ export default function TasksPage() {
               setForm((prev) => ({ ...prev, dueDate: e.target.value }))
             }
           />
-          <select
-            className="rounded-md border border-slate-300 px-3 py-2 md:col-span-2 disabled:bg-slate-100 disabled:text-slate-400"
-            value={form.assignee}
-            onChange={(e) =>
-              setForm((prev) => ({ ...prev, assignee: e.target.value }))
-            }
-            disabled={!form.project}
-          >
-            <option value="">
-              {form.project ? 'Unassigned' : 'Select a project first'}
-            </option>
-            {selectedProjectMembers.map((member) => (
-              <option key={member._id} value={member._id}>
-                {member.name} ({member.email})
+          <div className="md:col-span-2">
+            <label className="block text-sm font-medium text-slate-700 mb-1">
+              Assignee
+            </label>
+            <select
+              className="w-full rounded-md border border-slate-300 px-3 py-2 disabled:bg-slate-100 disabled:text-slate-400"
+              value={form.assignee}
+              onChange={(e) =>
+                setForm((prev) => ({ ...prev, assignee: e.target.value }))
+              }
+              disabled={!form.project}
+            >
+              <option value="">
+                {form.project ? 'Unassigned' : 'Select a project first'}
               </option>
-            ))}
-          </select>
+              {form.project && selectedProjectMembers.length === 0 ? (
+                <option value="" disabled>
+                  No members available for this project
+                </option>
+              ) : (
+                selectedProjectMembers.map((member) => (
+                  <option key={getMemberId(member)} value={getMemberId(member)}>
+                    {getMemberLabel(member)}
+                  </option>
+                ))
+              )}
+            </select>
+          </div>
 
           <button className="rounded-md bg-indigo-600 px-3 py-2 text-white md:col-span-2">
             Create task
@@ -167,6 +192,9 @@ export default function TasksPage() {
             </div>
             <p className="mt-1 text-sm text-slate-600">
               Project: {task.project?.name}
+            </p>
+            <p className="text-sm text-slate-600">
+              Assignee: {task.assignee?.name ?? 'Unassigned'}
             </p>
             <p className="text-sm text-slate-600">Priority: {task.priority}</p>
           </article>
