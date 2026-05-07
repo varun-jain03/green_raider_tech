@@ -43,11 +43,9 @@ npm run dev
 | Key                 | Description                                           |
 | ------------------- | ----------------------------------------------------- |
 | `VITE_API_BASE_URL` | Backend API base URL including `/api` path            |
-
-Example:
-
+  
 ```env
-VITE_API_BASE_URL=http://localhost:5000/api
+VITE_API_BASE_URL=https://teamtaskmanager-backend-cwun.onrender.com/api
 ```
 
 ## API Consumption
